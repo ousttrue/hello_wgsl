@@ -1,3 +1,3 @@
-# bun + vite で wgpu 練習
+# hello wgsl
 
-
+bun + vite & wgpu

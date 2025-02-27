@@ -3,6 +3,9 @@ import { run } from './wgpu_main';
 import React from 'react'
 import './App.css'
 
+import Markdown from 'marked-react';
+import md from './01_triangle.md?raw'
+
 const MyWebGPUApp = () => {
   const device: GPUDevice = useWebGPUDevice();
   const ref = React.useRef<HTMLCanvasElement>(null);
@@ -32,6 +35,9 @@ function App() {
     <WebGPUDeviceContextProvider
       loadingMessage={(<p>Loading...</p>)}
       notSupportedMessage={(<p>WebGPU is not supported on this browser.</p>)}>
+      <Markdown>
+        {md}
+      </Markdown>
       <MyWebGPUApp />
     </WebGPUDeviceContextProvider>
   )

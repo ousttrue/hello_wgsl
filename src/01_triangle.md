@@ -26,3 +26,8 @@ $ bun run dev
 
 - [rollupでtypescriptを使う](https://zenn.dev/s_takashi/scraps/ee10b6d8a6a937)
 
+# markdown
+
+- https://www.npmjs.com/package/marked-react
+
+# gh-pages
