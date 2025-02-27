@@ -22,4 +22,7 @@ $ bun run dev
 - [WebGPU未対応の場合にカスタマイズ可能なエラーメッセージをReact Contextでブラウザ画面上に表示する #React - Qiita](https://qiita.com/kubo_hiroya/items/7eb9386f06c6871f361a)
 - https://github.com/mikbry/react-webgl-app
 
-## gh-pages
+## build
+
+- [rollupでtypescriptを使う](https://zenn.dev/s_takashi/scraps/ee10b6d8a6a937)
+
