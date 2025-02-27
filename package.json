@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@webgpu/types": "^0.1.54",
+    "marked": "^15.0.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
