@@ -1,4 +1,4 @@
-# bun + view + typescript で WGPU を練習
+# bun + vite + typescript で WGPU を練習
 
 ## project 初期化
 
@@ -19,15 +19,30 @@ $ bun run dev
 
 ## React 化
 
+```typescript title="ts"
+export function run(device: GPUDevice, canvas: HTMLCanvasElement, context: GPUCanvasContext): number;
+```
+
+が描画関数で引数を供給する。
+device は取得に async があって、canvas は ref が必要になる。
+React では工夫が必要。
+
 - [WebGPU未対応の場合にカスタマイズ可能なエラーメッセージをReact Contextでブラウザ画面上に表示する #React - Qiita](https://qiita.com/kubo_hiroya/items/7eb9386f06c6871f361a)
 - https://github.com/mikbry/react-webgl-app
 
 ## build
 
+typescript の設定。
+
 - [rollupでtypescriptを使う](https://zenn.dev/s_takashi/scraps/ee10b6d8a6a937)
 
 # markdown
 
+メモを markdown で書いて、近くに canvas を配置するスタイルにしてみる。
+
 - https://www.npmjs.com/package/marked-react
 
 # gh-pages
+
+- https://github.com/actions/upload-pages-artifact
+- https://ja.vite.dev/config/shared-options#base
