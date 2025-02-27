@@ -2,7 +2,7 @@
 import vertexShader from './vertex.wgsl?raw'
 import fragmentShader from './fragment.wgsl?raw'
 
-function run(device: GPUDevice, canvas: HTMLCanvasElement, context: GPUCanvasContext) {
+export function run(device: GPUDevice, canvas: HTMLCanvasElement, context: GPUCanvasContext): number {
   const { devicePixelRatio } = window
   canvas.width = devicePixelRatio * canvas.clientWidth
   canvas.height = devicePixelRatio * canvas.clientHeight
@@ -61,10 +61,10 @@ function run(device: GPUDevice, canvas: HTMLCanvasElement, context: GPUCanvasCon
 
     requestAnimationFrame(frame)
   }
-  requestAnimationFrame(frame)
+  return requestAnimationFrame(frame)
 }
 
-async function initAsync() {
+export async function initAsync() {
   const canvas: HTMLCanvasElement = document.querySelector('canvas')!
 
   const adapter = await navigator.gpu.requestAdapter()
@@ -80,5 +80,3 @@ async function initAsync() {
 
   run(device, canvas, context);
 }
-
-initAsync()

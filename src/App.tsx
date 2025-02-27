@@ -1,34 +1,39 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { WebGPUDeviceContextProvider, useWebGPUDevice } from './useWebGPUDevice';
+import { run } from './wgpu_main';
+import React from 'react'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+const MyWebGPUApp = () => {
+  const device: GPUDevice = useWebGPUDevice();
+  const ref = React.useRef<HTMLCanvasElement>(null);
 
+  React.useEffect(() => {
+    const canvas = ref.current;
+    if (!canvas) {
+      throw new Error('no canvas')
+    }
+    const context = canvas.getContext('webgpu')
+    if (!context) {
+      throw new Error('no context')
+    }
+
+    const id = run(device, canvas, context);
+    return () => {
+      cancelAnimationFrame(id);
+    };
+  });
+
+  return <canvas ref={ref} width={500} height={500} />;
+};
+
+
+function App() {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <WebGPUDeviceContextProvider
+      loadingMessage={(<p>Loading...</p>)}
+      notSupportedMessage={(<p>WebGPU is not supported on this browser.</p>)}>
+      <MyWebGPUApp />
+    </WebGPUDeviceContextProvider>
   )
 }
 
