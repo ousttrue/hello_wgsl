@@ -1,3 +1,7 @@
+---
+title: gistfile1.hpp
+---
+
 # bun + vite + typescript で WGPU を練習
 
 ## project 初期化
@@ -20,7 +24,11 @@ $ bun run dev
 ## React 化
 
 ```typescript title="ts"
-export function run(device: GPUDevice, canvas: HTMLCanvasElement, context: GPUCanvasContext): number;
+export function run(
+  device: GPUDevice,
+  canvas: HTMLCanvasElement,
+  context: GPUCanvasContext,
+): number;
 ```
 
 が描画関数で引数を供給する。

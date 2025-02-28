@@ -4,7 +4,7 @@ import React from 'react'
 import './App.css'
 
 import Markdown from 'marked-react';
-import md from './01_triangle.md?raw'
+import md from './01_triangle.md'
 
 const MyWebGPUApp = () => {
   const device: GPUDevice = useWebGPUDevice();
@@ -36,7 +36,7 @@ function App() {
       loadingMessage={(<p>Loading...</p>)}
       notSupportedMessage={(<p>WebGPU is not supported on this browser.</p>)}>
       <Markdown>
-        {md}
+        {md.content}
       </Markdown>
       <MyWebGPUApp />
     </WebGPUDeviceContextProvider>
