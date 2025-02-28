@@ -1,18 +1,6 @@
 import { WebGPUDeviceContextProvider, useWebGPUDevice } from './useWebGPUDevice';
 import { run } from './wgpu_main';
 import React from 'react'
-import './App.css'
-
-import Markdown from 'marked-react';
-import type { MarkdownData } from '../mymd-vite-plugin';
-
-const posts = import.meta.glob<MarkdownData>(
-  './*.md',
-  {
-    import: 'default',
-    eager: true
-  }
-);
 
 const MyWebGPUApp = () => {
   const device: GPUDevice = useWebGPUDevice();
@@ -38,12 +26,8 @@ const MyWebGPUApp = () => {
 };
 
 
-function App() {
+function Triangle() {
   return (<>
-    {Object.entries(posts).map(([k, v]) => (<li>
-      {k}
-    </li>
-    ))}
     <WebGPUDeviceContextProvider
       loadingMessage={(<p>Loading...</p>)}
       notSupportedMessage={(<p>WebGPU is not supported on this browser.</p>)}>
@@ -52,4 +36,4 @@ function App() {
   </>)
 }
 
-export default App
+export default Triangle

@@ -2,7 +2,7 @@
 title: triangle
 ---
 
-# bun + vite + typescript で WGPU を練習
+# Triangle
 
 ## project 初期化
 

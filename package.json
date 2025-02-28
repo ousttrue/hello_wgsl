@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@types/node": "^22.13.5",
+    "@types/react-router-dom": "^5.3.3",
     "@webgpu/types": "^0.1.54",
     "marked": "^15.0.7",
     "marked-react": "^3.0.0",
