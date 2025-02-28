@@ -1,0 +1,1 @@
+{"root":["./index.d.ts","./mymd-vite-plugin.ts","./vite.config.ts","./src/triangle.tsx","./src/main.tsx","./src/router.tsx","./src/usewebgpudevice.tsx","./src/vite-env.d.ts","./src/wgpu_main.ts","./types/app.d.ts","./types/main.d.ts","./types/markdown.d.ts","./types/usewebgpudevice.d.ts","./types/wgpu_main.d.ts"],"version":"5.7.3"}
