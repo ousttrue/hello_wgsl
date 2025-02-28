@@ -4,7 +4,15 @@ import React from 'react'
 import './App.css'
 
 import Markdown from 'marked-react';
-import md from './01_triangle.md'
+import type { MarkdownData } from '../mymd-vite-plugin';
+
+const posts = import.meta.glob<MarkdownData>(
+  './*.md',
+  {
+    import: 'default',
+    eager: true
+  }
+);
 
 const MyWebGPUApp = () => {
   const device: GPUDevice = useWebGPUDevice();
@@ -31,16 +39,17 @@ const MyWebGPUApp = () => {
 
 
 function App() {
-  return (
+  return (<>
+    {Object.entries(posts).map(([k, v]) => (<li>
+      {k}
+    </li>
+    ))}
     <WebGPUDeviceContextProvider
       loadingMessage={(<p>Loading...</p>)}
       notSupportedMessage={(<p>WebGPU is not supported on this browser.</p>)}>
-      <Markdown>
-        {md.content}
-      </Markdown>
       <MyWebGPUApp />
     </WebGPUDeviceContextProvider>
-  )
+  </>)
 }
 
 export default App

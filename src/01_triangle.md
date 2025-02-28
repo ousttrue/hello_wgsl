@@ -1,5 +1,5 @@
 ---
-title: gistfile1.hpp
+title: triangle
 ---
 
 # bun + vite + typescript で WGPU を練習
