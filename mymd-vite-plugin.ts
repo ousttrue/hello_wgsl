@@ -19,7 +19,7 @@ function fixFrontmatter(frontmatter: Frontmatter) {
   }
 }
 
-function splitMatter(src: string): MarkdownData {
+export function splitMatter(src: string): MarkdownData {
   src = src.replace(/\r\n/g, "\n");
   const head = src.substring(0, 4);
   src = src.substring(4);
@@ -49,7 +49,7 @@ export default function pluginMarkdown(): Plugin {
     transform(code, id) {
       // console.log(id);
       const extension = path.extname(id)
-      if (extension !== '.md') return
+      if (extension !== '.md' && extension !== '.mdx') return
       const matter = splitMatter(code)
       return 'export default ' + JSON.stringify(matter);
     },

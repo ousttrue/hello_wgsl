@@ -2,49 +2,51 @@ import React from "react";
 import {
   createBrowserRouter,
 } from "react-router-dom";
-import Triangle from './Triangle.tsx'
+import { evaluateSync } from '@mdx-js/mdx'
+import remarkFrontmatter from 'remark-frontmatter'
+import { type MarkdownData } from '../mymd-vite-plugin';
+import { jsx, jsxs, Fragment } from "react/jsx-runtime";
 
-import Markdown from 'marked-react';
-import type { MarkdownData } from '../mymd-vite-plugin';
-
-const basename = "/hello_wgsl";
-function fix_path(key: string) {
-  return `${basename}/${key.substring(2)}`;
-}
-
-const WGSL: { [key: string]: React.ReactNode } = {
-  './01_triangle.md': <Triangle />
-};
-
-const posts = import.meta.glob<MarkdownData>(
-  './*.md',
+const raws = import.meta.glob<MarkdownData>(
+  './posts/**/*.mdx',
   {
     import: 'default',
-    eager: true
+    eager: true,
   }
 );
+const runtime = { jsx, jsxs, Fragment };
 
-const routes = [];
+const posts = Object.entries(raws).map(([k, v]) => {
+  const element = evaluateSync(v.content, runtime).default;
+  return {
+    url: k.substring(2),
+    element,
+    ...v,
+  };
+});
+
+const routes: { path: string, element: React.ReactNode }[] = [];
+
+function Index() {
+  return (<>
+    <h1>posts</h1>
+    {posts.map((post, i) => (<li key={i}>
+      <a href={post.url}>{post.frontmatter.title}</a>
+    </li>))}
+  </>);
+}
 
 routes.push({
   path: "/",
-  element: (<>
-    <h1>{"bun + vite + typescript で WGPU を練習"}</h1>
-    {Object.entries(posts).map(([k, v]) => (<li key={k}>
-      <a href={fix_path(k)}>{v.frontmatter.title}</a>
-    </li>))}
-  </>),
+  element: <Index />,
 });
 
-for (const [k, v] of Object.entries(posts)) {
+for (const post of posts) {
   routes.push({
-    path: k.substring(2),
-    element: (<>
-      <Markdown>{v.content}</Markdown>
-      {WGSL[k] ? WGSL[k] : ''}
-    </>),
+    path: post.url,
+    element: <post.element />,
   });
 }
 
-export const router = createBrowserRouter(routes, { basename });
+export const router = createBrowserRouter(routes, { basename: import.meta.env.BASE_URL });
 

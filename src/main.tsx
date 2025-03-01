@@ -6,6 +6,8 @@ import {
 
 import { router } from './router';
 
+import 'github-markdown-css';
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <RouterProvider router={router} />
 );

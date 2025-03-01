@@ -3,3 +3,9 @@ declare module "*.md" {
   const md: MarkdownData;
   export { md as default };
 }
+declare module '*.mdx' {
+  let MDXComponent: (props) => JSX.Element;
+  const title: string;
+  export var title;
+  export default MDXComponent;
+}

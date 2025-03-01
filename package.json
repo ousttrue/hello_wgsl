@@ -12,14 +12,20 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@mdx-js/rollup": "^3.1.0",
     "@types/node": "^22.13.5",
     "@types/react-router-dom": "^5.3.3",
     "@webgpu/types": "^0.1.54",
+    "github-markdown-css": "^5.8.1",
+    "i": "^0.3.7",
     "marked": "^15.0.7",
     "marked-react": "^3.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.2.0",
+    "remark-frontmatter": "^5.0.0",
+    "remark-gfm": "^4.0.1",
+    "remark-mdx-frontmatter": "^5.0.0",
     "yaml": "^2.7.0"
   },
   "devDependencies": {
