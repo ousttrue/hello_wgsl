@@ -23,9 +23,8 @@ header {
 }
 
 main {
-  background-color: #0f0;
+  /* background-color: #0f0; */
   flex: 1 1 auto;
-  padding: 1em;
 }
 
 footer {
