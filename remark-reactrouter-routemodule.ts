@@ -1,16 +1,60 @@
 import { valueToEstree } from 'estree-util-value-to-estree';
-import { type Literal, type Root } from 'mdast';
-import { type Plugin } from 'unified';
+// import { type Literal, type Root } from 'mdast';
+// import { type Plugin } from 'unified';
 import { parse as parseYaml } from 'yaml';
 
-type RemarkReactRouerFrontmatterOptions = {
+function process(ast, metaData) {
+  ast.children.unshift({
+    type: 'mdxjsEsm',
+    value: '',
+    data: {
+      estree: {
+        type: 'Program',
+        sourceType: 'module',
+        body: [
+          {
+            type: 'ExportNamedDeclaration',
+            specifiers: [],
+            declaration: {
+              type: 'VariableDeclaration',
+              kind: 'const',
+              declarations: [
+                {
+                  type: 'VariableDeclarator',
+                  id: { type: 'Identifier', name: 'meta' },
+                  init: {
+                    type: 'ArrowFunctionExpression',
+                    expression: false,
+                    generator: false,
+                    async: false,
+                    params: [],
+                    body: {
+                      type: 'BlockStatement',
+                      body: [
+                        {
+                          type: 'ReturnStatement',
+                          argument: valueToEstree(metaData, {
+                            preserveReferences: true,
+                          }),
+                        },
+                      ],
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  });
+}
+
+type RemarkReactRouerRouteModuleOptions = {
   meta: (frontmatter: unknown) => Record<string, string>[];
 };
 
-const remarkReactRouerRouteModule: Plugin<
-  [RemarkReactRouerFrontmatterOptions],
-  Root
-> = ({ meta }) => {
+const remarkReactRouerRouteModule = ({ meta }: RemarkReactRouerRouteModuleOptions) => {
   const allParsers: Record<string, (value: string) => unknown> = {
     yaml: parseYaml,
   };
@@ -30,50 +74,7 @@ const remarkReactRouerRouteModule: Plugin<
     const metaData = data ? meta(data) : undefined;
 
     if (metaData) {
-      ast.children.unshift({
-        type: 'mdxjsEsm',
-        value: '',
-        data: {
-          estree: {
-            type: 'Program',
-            sourceType: 'module',
-            body: [
-              {
-                type: 'ExportNamedDeclaration',
-                specifiers: [],
-                declaration: {
-                  type: 'VariableDeclaration',
-                  kind: 'const',
-                  declarations: [
-                    {
-                      type: 'VariableDeclarator',
-                      id: { type: 'Identifier', name: 'meta' },
-                      init: {
-                        type: 'ArrowFunctionExpression',
-                        expression: false,
-                        generator: false,
-                        async: false,
-                        params: [],
-                        body: {
-                          type: 'BlockStatement',
-                          body: [
-                            {
-                              type: 'ReturnStatement',
-                              argument: valueToEstree(metaData, {
-                                preserveReferences: true,
-                              }),
-                            },
-                          ],
-                        },
-                      },
-                    },
-                  ],
-                },
-              },
-            ],
-          },
-        },
-      });
+      process(ast, metaData);
     }
   };
 };

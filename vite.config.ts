@@ -3,7 +3,8 @@ import { defineConfig } from "vite";
 import mdx from '@mdx-js/rollup';
 
 import remarkFrontmatter from 'remark-frontmatter';
-import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
+// import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
+import remarkReactRouerRouteModule from './remark-reactrouter-routemodule';
 
 export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
   return {
@@ -14,7 +15,25 @@ export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
           /* jsxImportSource: …, otherOptions… */
           remarkPlugins: [
             [remarkFrontmatter],
-            [remarkMdxFrontmatter],
+            // [remarkMdxFrontmatter],
+            [
+              remarkReactRouerRouteModule,
+              {
+                meta: (frontmatter: Record<string, string>) => {
+                  return [
+                    { title: `${frontmatter.title}` },
+                    {
+                      name: 'description',
+                      content: frontmatter.description,
+                    },
+                    {
+                      property: 'og:title',
+                      content: `${frontmatter.title}`,
+                    },
+                  ];
+                },
+              },
+            ],
           ],
         })
       },
