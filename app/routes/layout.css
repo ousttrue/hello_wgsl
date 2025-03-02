@@ -9,7 +9,7 @@ body {
 }
 
 body {
-  background: #ff0;
+  /* background: #ff0; */
   display: flex;
   flex-direction: column;
 }
@@ -17,18 +17,19 @@ body {
 /* https://developer.mozilla.org/ja/docs/Web/CSS/CSS_flexible_box_layout/Basic_concepts_of_flexbox */
 
 header {
-  background-color: #f00;
+  /* background-color: #f00; */
   display: flex;
   flex-direction: row;
 }
 
 main {
-  background-color: #0f0;
+  /* background-color: #0f0; */
   flex: 1;
+  padding: 1em;
 }
 
 footer {
-  background-color: #00f;
+  /* background-color: #00f; */
 }
 
 .padding {

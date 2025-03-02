@@ -1,9 +1,58 @@
 ---
-title: mdx
+title: サイト構築編
 ---
 
-- [React Router v7 でお手軽ドキュメントサイトジェネレータ #Markdown - Qiita](https://qiita.com/_ytori/items/6479e5263ec167e0957b)
-- [【React Router v7】.mdファイルベースの静的サイトをビルドする #Markdown - Qiita](https://qiita.com/kedama-t/items/d89d778a2424fdac739a)
-- [React Router v7でSSR, CSR, SSGする #SPA - Qiita](https://qiita.com/studio_haneya/items/5e6b8ddb8be549d5db15)
-- [Vite 環境(React)で jsx に mdx をインポートする](https://zenn.dev/inovue/articles/971900975ad52a)
+wgsl を練習するべく`gh-pages` に展開できる開発環境を摸索していたのだが、
+その中で [ReactRouter v7](https://reactrouter.com/) よさげだった。
 
+[ClientLoader](https://react-router-docs-ja.techtalk.jp/start/framework/data-loading) という仕組みがあって、
+事前に `async` 関数を実行できる。
+`wgpu` の初期化に不可欠な `device` 取得がすっきり記述できた。
+
+```ts title="clientLoader"
+export async function clientLoader() {
+  const adapter = await navigator.gpu.requestAdapter();
+  console.assert(adapter instanceof GPUAdapter, "no GPUAdapter");
+  const device = await adapter!.requestDevice();
+  return { adapter, device };
+}
+
+export default function WebGpu({ loaderData }) {
+  const { adapter, device } = loaderData;
+  ///
+}
+```
+
+## project 初期化
+
+https://ja.vite.dev/guide/
+
+```sh
+$ mkdir hello_wgsl
+$ cd hello_wgsl
+$ bun create vite .
+# react + typescript
+$ bun install
+$ bun run dev
+```
+
+## build
+
+typescript の設定。
+
+- [rollupでtypescriptを使う](https://zenn.dev/s_takashi/scraps/ee10b6d8a6a937)
+
+# markdown
+
+メモを markdown で書いて、近くに canvas を配置するスタイルにしてみる。
+
+- https://www.npmjs.com/package/marked-react
+
+# gh-pages
+
+- https://github.com/actions/upload-pages-artifact
+- https://ja.vite.dev/config/shared-options#base
+- [React Router v7 でお手軽ドキュメントサイトジェネレータ #Markdown - Qiita](https://qiita.com/_ytori/items/6479e5263ec167e0957b)
+- [【React Router v7】.md ファイルベースの静的サイトをビルドする #Markdown - Qiita](https://qiita.com/kedama-t/items/d89d778a2424fdac739a)
+- [React Router v7 で SSR, CSR, SSG する #SPA - Qiita](https://qiita.com/studio_haneya/items/5e6b8ddb8be549d5db15)
+- [Vite 環境(React)で jsx に mdx をインポートする](https://zenn.dev/inovue/articles/971900975ad52a)
