@@ -9,30 +9,9 @@ import {
 import posts from './posts';
 
 export default [
-  {
-    path: '/',
-    file: "./routes/layout.tsx",
-    children: [
-      {
-        index: true,
-        file: "./routes/home.tsx",
-      },
-      // {
-      //   path: "about",
-      //   file: "./routes/about.tsx",
-      // },
-      // {
-      //   path: "todos",
-      //   file: "./routes/todos.tsx",
-      //   children: [
-      //     {
-      //       path: ":id",
-      //       file: "./routes/todo.tsx",
-      //     },
-      //   ],
-      // },
-    ],
-  },
+  layout("./routes/layout.tsx", [
+    index("./routes/home.tsx"),
+    ...(posts.map(({ path, file }) => route(path, file)))
+  ]),
   // route('/hello', 'routes/hello.mdx'),
-  ...(posts.map(({ path, file }) => route(path, file)))
 ] satisfies RouteConfig;
