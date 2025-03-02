@@ -1,31 +1,13 @@
 import React from 'react';
+import SizeObserver from './SizeObserver.ts';
 
-// https://zenn.dev/rerrah/articles/2195b607c7af98
-class SizeObserver {
-  readonly observer: ResizeObserver;
-  constructor(
-    container: HTMLElement,
-    onResize: (width: number, height: number) => void
-  ) {
-    // https://developer.mozilla.org/ja/docs/Web/API/ResizeObserverEntry/devicePixelContentBoxSize
-    this.observer = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        if (entry.contentBoxSize) {
-          const size = entry.devicePixelContentBoxSize[0];
-          onResize(size.inlineSize, size.blockSize);
-        }
-      }
-    });
-    this.observer.observe(container, { box: "device-pixel-content-box" });
-  }
-}
-
-class WebGL2 {
-  readonly gl: WebGL2RenderingContext;
-  readonly requestId: number = 0;
+class Renderer {
   readonly observer: SizeObserver;
   private width;
   private height;
+
+  readonly gl: WebGL2RenderingContext;
+  readonly requestId: number = 0;
 
   constructor(
     readonly canvas: HTMLCanvasElement,
@@ -41,6 +23,9 @@ class WebGL2 {
     this.width = canvas.width;
     this.height = canvas.height;
   }
+  close() {
+    cancelAnimationFrame(this.requestId);
+  }
   private render() {
     if (this.width != this.canvas.width || this.height != this.canvas.height) {
       this.canvas.width = this.width;
@@ -53,17 +38,15 @@ class WebGL2 {
     }
     requestAnimationFrame(() => this.render());
   }
-  close() {
-    cancelAnimationFrame(this.requestId);
-  }
 }
 
+
 // https://github.com/mikbry/react-webgl-app
-export default function Triangle() {
+export default function Canvas() {
   const refContainer = React.useRef<HTMLDivElement>(null);
   const ref = React.useRef<HTMLCanvasElement>(null);
   React.useEffect(() => {
-    const webGL = new WebGL2(ref.current!, refContainer.current!);
+    const webGL = new Renderer(ref.current!, refContainer.current!);
     return () => {
       webGL.close();
     };
