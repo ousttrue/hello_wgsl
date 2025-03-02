@@ -1,5 +1,3 @@
-import { Plugin } from 'vite';
-import path from 'node:path';
 import YAML from 'yaml'
 
 export type Frontmatter = {
@@ -43,15 +41,15 @@ export function splitMatter(src: string): MarkdownData {
   }
 }
 
-export default function pluginMarkdown(): Plugin {
-  return {
-    name: "mymd-vite-plugin",
-    transform(code, id) {
-      // console.log(id);
-      const extension = path.extname(id)
-      if (extension !== '.md' && extension !== '.mdx') return
-      const matter = splitMatter(code)
-      return 'export default ' + JSON.stringify(matter);
-    },
-  };
-};
+// export default function pluginMarkdown(): Plugin {
+//   return {
+//     name: "mymd-vite-plugin",
+//     transform(code, id) {
+//       // console.log(id);
+//       const extension = path.extname(id)
+//       if (extension !== '.md' && extension !== '.mdx') return
+//       const matter = splitMatter(code)
+//       return 'export default ' + JSON.stringify(matter);
+//     },
+//   };
+// };

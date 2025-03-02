@@ -1,20 +1,24 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import Markdown from './mymd-vite-plugin';
-// import mdx from '@mdx-js/rollup';
-// import remarkGfm from 'remark-gfm';
-// {
-//   enforce: 'pre', ...mdx({
-//     remarkPlugins: [remarkGfm],
-//     rehypePlugins: [],
-//   })
-// }
+import { reactRouter } from "@react-router/dev/vite";
+import { defineConfig } from "vite";
+import mdx from '@mdx-js/rollup';
 
-// https://vite.dev/config/
-export default defineConfig({
-  base: "/hello_wgsl/",
-  plugins: [
-    react(),
-    Markdown(),
-  ],
-})
+import remarkFrontmatter from 'remark-frontmatter';
+import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
+
+export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
+  return {
+    base: '/hello_wgsl/',
+    plugins: [
+      {
+        enforce: 'pre', ...mdx({
+          /* jsxImportSource: …, otherOptions… */
+          remarkPlugins: [
+            [remarkFrontmatter],
+            [remarkMdxFrontmatter],
+          ],
+        })
+      },
+      reactRouter()
+    ]
+  };
+});
