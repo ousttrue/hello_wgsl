@@ -1,0 +1,18 @@
+---
+title: mdx wgpu
+---
+
+`wgpu.tsx` で定義した Component と clientLoader を再利用できた。
+Markdown でメモをとって `tsx` で実験するスタイルで進められそう。
+
+```tsx title="import, export, use"
+import WebGpu from "./wgpu.tsx";
+export { clientLoader } from "./wgpu";
+
+<WebGpu />;
+```
+
+import WebGpu from "./wgpu.tsx";
+export { clientLoader } from "./wgpu";
+
+<WebGpu />

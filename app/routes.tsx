@@ -9,10 +9,10 @@ import {
 export default [
   layout("./routes/layout.tsx", [
     index("./routes/home.tsx"),
-    route("01_canvas", "./routes/01_canvas.tsx"),
-    route("02_wgpu", "./routes/02_wgpu.tsx"),
-    route('10_setup', './routes/10_setup.mdx'),
-    route('11_canvas', './routes/11_canvas.mdx'),
-    route('12_wgpu', './routes/12_wgpu.mdx'),
+    route("canvas.tsx", "./routes/canvas.tsx"),
+    route("wgpu.tsx", "./routes/wgpu.tsx"),
+    route('site.mdx', './routes/site_setup.mdx'),
+    route('canvas.mdx', './routes/mdx_canvas.mdx'),
+    route('wgpu.mdx', './routes/mdx_wgpu.mdx'),
   ]),
 ] satisfies RouteConfig;
